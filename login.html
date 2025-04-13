@@ -7,25 +7,35 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            padding: 20px;
+            padding: 0;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f4f4f4;
+        }
+        .container {
             text-align: center;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
         }
         header {
             font-size: 2em;
             margin-bottom: 20px;
         }
         form {
-            margin-top: 20px;
-            display: inline-block;
-            text-align: left;
-            background-color: #f9f9f9;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
         }
         label {
-            display: block;
             margin-bottom: 5px;
+            text-align: left;
         }
         input[type="text"], input[type="password"] {
             width: 100%;
@@ -60,21 +70,23 @@
     </style>
 </head>
 <body>
-    <header>Login to Selenium Pie Co.</header>
-    
-    <form id="login-form">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required><br>
+    <div class="container">
+        <header>Login to Selenium Pie Co.</header>
         
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required><br>
+        <form id="login-form">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required><br>
+            
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required><br>
 
-        <button type="submit">Login</button>
-    </form>
+            <button type="submit">Login</button>
+        </form>
 
-    <div id="result" style="margin-top: 20px;"></div>
-    
-    <a href="index.html" class="back-link">Back to Home</a>
+        <div id="result" style="margin-top: 20px;"></div>
+        
+        <a href="index.html" class="back-link">Back to Home</a>
+    </div>
 
     <script>
         // Handle form submission
