@@ -1,99 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Login Form Demo</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f4f4;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-    }
-
-    .container {
-      background: white;
-      padding: 2rem;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      width: 100%;
-      max-width: 400px;
-    }
-
-    h1 {
-      text-align: center;
-      color: #333;
-    }
-
-    label {
-      display: block;
-      margin: 0.5rem 0 0.25rem;
-      font-weight: bold;
-    }
-
-    input {
-      width: 100%;
-      padding: 0.5rem;
-      margin-bottom: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-
-    button {
-      width: 100%;
-      padding: 0.75rem;
-      background: #007bff;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      font-size: 1rem;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background: #0056b3;
-    }
-
-    #result {
-      margin-top: 1rem;
-      text-align: center;
-      font-weight: bold;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selenium Pie Co.</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            text-align: center;
+        }
+        header {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        nav a {
+            display: inline-block;
+            margin: 10px;
+            padding: 10px 20px;
+            background-color: #ff704d;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        nav a:hover {
+            background-color: #e55b35;
+        }
+        .tagline {
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Login</h1>
-    <form id="login-form">
-      <label for="username">Username:</label>
-      <input type="text" id="username" name="username" required />
-
-      <label for="password">Password:</label>
-      <input type="password" id="password" name="password" required />
-
-      <button type="submit">Login</button>
-    </form>
-    <div id="result"></div>
-  </div>
-
-  <script>
-    document.getElementById('login-form').onsubmit = function (event) {
-      event.preventDefault();
-      const username = document.getElementById('username').value;
-      const password = document.getElementById('password').value;
-
-      if (username === 'admin' && password === 'password') {
-        document.getElementById('result').innerText = 'Login Successful!';
-        document.getElementById('result').style.color = 'green';
-      } else {
-        document.getElementById('result').innerText = 'Login Failed!';
-        document.getElementById('result').style.color = 'red';
-      }
-    };
-  </script>
+    <header>Welcome to Selenium Pie Co. 🥧</header>
+    <nav>
+        <a href="login.html">Login</a>
+        <a href="order.html">Order Pies</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+    <div class="tagline">Delicious pies, delivered with automation!</div>
 </body>
 </html>
