@@ -4,149 +4,165 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Your Cart</title>
-  <link rel="stylesheet" href="styles.css"/>
+  <link rel="stylesheet" href="styles.css" />
   <style>
+    body {
+      font-family: sans-serif;
+      background-color: #f7f7f7;
+    }
     .cart-container {
       max-width: 800px;
       margin: 2rem auto;
+      padding: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 10px;
       background: #fff;
-      padding: 2rem;
-      border-radius: 12px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
-
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 1.5rem;
+    }
     .cart-item {
       display: flex;
       align-items: center;
-      margin-bottom: 1.5rem;
+      justify-content: space-between;
       border-bottom: 1px solid #eee;
-      padding-bottom: 1rem;
+      padding: 1rem 0;
     }
-
     .cart-item img {
-      width: 100px;
+      width: 80px;
       border-radius: 10px;
-      margin-right: 1.5rem;
+      margin-right: 1rem;
     }
-
     .item-details {
-      flex: 1;
+      flex-grow: 1;
     }
-
-    .item-details h3 {
-      margin: 0 0 0.5rem;
+    .item-name {
+      font-size: 1.2rem;
+      font-weight: bold;
     }
-
     .quantity-controls {
       display: flex;
       align-items: center;
       gap: 0.5rem;
+      margin-top: 0.5rem;
     }
-
     .quantity-controls button {
-      padding: 0.3rem 0.7rem;
+      padding: 0.3rem 0.6rem;
       font-size: 1rem;
-      cursor: pointer;
     }
-
     .line-total {
       font-weight: bold;
     }
-
     .cart-total {
       text-align: right;
-      font-size: 1.2rem;
-      margin-top: 2rem;
+      margin-top: 1rem;
+      font-size: 1.3rem;
       font-weight: bold;
+    }
+    .checkout-button {
+      display: block;
+      margin: 2rem auto 0;
+      padding: 0.75rem 2rem;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .checkout-button:hover {
+      background-color: #218838;
     }
   </style>
 </head>
 <body>
   <div class="cart-container">
     <h1>Your Cart</h1>
-
+    
     <div class="cart-item" data-id="apple">
-      <img src="https://i.imgur.com/9JtVIbi.jpg" alt="Apple Pie">
+      <img src="https://i.imgur.com/9JtVIbi.png" alt="Apple Pie">
       <div class="item-details">
-        <h3>Apple Pie</h3>
-        <p>$12.00</p>
+        <div class="item-name">Apple Pie</div>
+        <div>$12.00</div>
         <div class="quantity-controls">
-          <button onclick="updateQuantity('apple', -1)">−</button>
+          <button onclick="updateQuantity('apple', -1)">-</button>
           <span id="qty-apple">1</span>
           <button onclick="updateQuantity('apple', 1)">+</button>
         </div>
-        <p class="line-total">Line Total: $<span id="total-apple">12.00</span></p>
       </div>
+      <div class="line-total" id="line-total-apple">$12.00</div>
     </div>
 
     <div class="cart-item" data-id="cherry">
-      <img src="https://i.imgur.com/bviFU4U.jpg" alt="Cherry Pie">
+      <img src="https://i.imgur.com/bviFU4U.png" alt="Cherry Pie">
       <div class="item-details">
-        <h3>Cherry Pie</h3>
-        <p>$14.00</p>
+        <div class="item-name">Cherry Pie</div>
+        <div>$14.00</div>
         <div class="quantity-controls">
-          <button onclick="updateQuantity('cherry', -1)">−</button>
+          <button onclick="updateQuantity('cherry', -1)">-</button>
           <span id="qty-cherry">1</span>
           <button onclick="updateQuantity('cherry', 1)">+</button>
         </div>
-        <p class="line-total">Line Total: $<span id="total-cherry">14.00</span></p>
       </div>
+      <div class="line-total" id="line-total-cherry">$14.00</div>
     </div>
 
     <div class="cart-item" data-id="pecan">
-      <img src="https://i.imgur.com/TCCj56K.jpg" alt="Pecan Pie">
+      <img src="https://i.imgur.com/TCCj56K.png" alt="Pecan Pie">
       <div class="item-details">
-        <h3>Pecan Pie</h3>
-        <p>$15.00</p>
+        <div class="item-name">Pecan Pie</div>
+        <div>$16.00</div>
         <div class="quantity-controls">
-          <button onclick="updateQuantity('pecan', -1)">−</button>
+          <button onclick="updateQuantity('pecan', -1)">-</button>
           <span id="qty-pecan">1</span>
           <button onclick="updateQuantity('pecan', 1)">+</button>
         </div>
-        <p class="line-total">Line Total: $<span id="total-pecan">15.00</span></p>
       </div>
+      <div class="line-total" id="line-total-pecan">$16.00</div>
     </div>
 
-    <div class="cart-total">Grand Total: $<span id="grand-total">41.00</span></div>
+    <div class="cart-total" id="cart-total">Total: $42.00</div>
+
+    <a href="checkout.html">
+      <button class="checkout-button">Proceed to Checkout</button>
+    </a>
   </div>
 
   <script>
     const prices = {
-      apple: 12.00,
-      cherry: 14.00,
-      pecan: 15.00
+      apple: 12,
+      cherry: 14,
+      pecan: 16,
     };
 
-    let cart = JSON.parse(localStorage.getItem("cart")) || {
+    let cart = JSON.parse(localStorage.getItem('cart')) || {
       apple: 1,
       cherry: 1,
-      pecan: 1
+      pecan: 1,
     };
 
-    function updateDOM() {
-      let grandTotal = 0;
-      for (let item in cart) {
-        const qty = cart[item];
-        const price = prices[item];
-        const lineTotal = qty * price;
+    function updateQuantity(pie, change) {
+      cart[pie] = Math.max(0, (cart[pie] || 0) + change);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      renderCart();
+    }
 
-        document.getElementById(`qty-${item}`).textContent = qty;
-        document.getElementById(`total-${item}`).textContent = lineTotal.toFixed(2);
-        grandTotal += lineTotal;
+    function renderCart() {
+      let total = 0;
+      for (const pie in prices) {
+        const qty = cart[pie] || 0;
+        const lineTotal = qty * prices[pie];
+        total += lineTotal;
+        document.getElementById(`qty-${pie}`).textContent = qty;
+        document.getElementById(`line-total-${pie}`).textContent = `$${lineTotal.toFixed(2)}`;
       }
-      document.getElementById("grand-total").textContent = grandTotal.toFixed(2);
-      localStorage.setItem("cart", JSON.stringify(cart));
+      document.getElementById('cart-total').textContent = `Total: $${total.toFixed(2)}`;
     }
 
-    function updateQuantity(item, change) {
-      if (!(item in cart)) cart[item] = 0;
-      cart[item] += change;
-      if (cart[item] < 0) cart[item] = 0;
-      updateDOM();
-    }
-
-    // Initialize cart display
-    updateDOM();
+    renderCart();
   </script>
 </body>
 </html>
