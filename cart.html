@@ -4,51 +4,59 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Your Cart</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css"/>
   <style>
     .cart-container {
       max-width: 800px;
       margin: 2rem auto;
-      padding: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 10px;
       background: #fff;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
+
     .cart-item {
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      margin-bottom: 1.5rem;
       border-bottom: 1px solid #eee;
-      padding: 1rem 0;
+      padding-bottom: 1rem;
     }
+
     .cart-item img {
-      width: 80px;
+      width: 100px;
       border-radius: 10px;
-      margin-right: 1rem;
+      margin-right: 1.5rem;
     }
+
     .item-details {
-      flex-grow: 1;
+      flex: 1;
     }
-    .item-name {
-      font-size: 1.2rem;
-      font-weight: bold;
+
+    .item-details h3 {
+      margin: 0 0 0.5rem;
     }
+
     .quantity-controls {
       display: flex;
       align-items: center;
       gap: 0.5rem;
     }
+
     .quantity-controls button {
-      padding: 0.3rem 0.6rem;
+      padding: 0.3rem 0.7rem;
       font-size: 1rem;
+      cursor: pointer;
     }
+
     .line-total {
       font-weight: bold;
     }
+
     .cart-total {
       text-align: right;
-      margin-top: 1rem;
-      font-size: 1.3rem;
+      font-size: 1.2rem;
+      margin-top: 2rem;
       font-weight: bold;
     }
   </style>
@@ -56,84 +64,89 @@
 <body>
   <div class="cart-container">
     <h1>Your Cart</h1>
-    
+
     <div class="cart-item" data-id="apple">
-      <img src="https://i.imgur.com/9JtVIbi.png" alt="Apple Pie">
+      <img src="https://i.imgur.com/9JtVIbi.jpg" alt="Apple Pie">
       <div class="item-details">
-        <div class="item-name">Apple Pie</div>
-        <div>$12.00</div>
+        <h3>Apple Pie</h3>
+        <p>$12.00</p>
         <div class="quantity-controls">
-          <button onclick="updateQuantity('apple', -1)">-</button>
+          <button onclick="updateQuantity('apple', -1)">−</button>
           <span id="qty-apple">1</span>
           <button onclick="updateQuantity('apple', 1)">+</button>
         </div>
+        <p class="line-total">Line Total: $<span id="total-apple">12.00</span></p>
       </div>
-      <div class="line-total" id="line-total-apple">$12.00</div>
     </div>
 
     <div class="cart-item" data-id="cherry">
-      <img src="https://i.imgur.com/bviFU4U.png" alt="Cherry Pie">
+      <img src="https://i.imgur.com/bviFU4U.jpg" alt="Cherry Pie">
       <div class="item-details">
-        <div class="item-name">Cherry Pie</div>
-        <div>$14.00</div>
+        <h3>Cherry Pie</h3>
+        <p>$14.00</p>
         <div class="quantity-controls">
-          <button onclick="updateQuantity('cherry', -1)">-</button>
+          <button onclick="updateQuantity('cherry', -1)">−</button>
           <span id="qty-cherry">1</span>
           <button onclick="updateQuantity('cherry', 1)">+</button>
         </div>
+        <p class="line-total">Line Total: $<span id="total-cherry">14.00</span></p>
       </div>
-      <div class="line-total" id="line-total-cherry">$14.00</div>
     </div>
 
     <div class="cart-item" data-id="pecan">
-      <img src="https://i.imgur.com/TCCj56K.png" alt="Pecan Pie">
+      <img src="https://i.imgur.com/TCCj56K.jpg" alt="Pecan Pie">
       <div class="item-details">
-        <div class="item-name">Pecan Pie</div>
-        <div>$16.00</div>
+        <h3>Pecan Pie</h3>
+        <p>$15.00</p>
         <div class="quantity-controls">
-          <button onclick="updateQuantity('pecan', -1)">-</button>
+          <button onclick="updateQuantity('pecan', -1)">−</button>
           <span id="qty-pecan">1</span>
           <button onclick="updateQuantity('pecan', 1)">+</button>
         </div>
+        <p class="line-total">Line Total: $<span id="total-pecan">15.00</span></p>
       </div>
-      <div class="line-total" id="line-total-pecan">$16.00</div>
     </div>
 
-    <div class="cart-total" id="cart-total">Total: $42.00</div>
+    <div class="cart-total">Grand Total: $<span id="grand-total">41.00</span></div>
   </div>
 
   <script>
     const prices = {
-      apple: 12,
-      cherry: 14,
-      pecan: 16,
+      apple: 12.00,
+      cherry: 14.00,
+      pecan: 15.00
     };
 
-    let cart = JSON.parse(localStorage.getItem('cart')) || {
+    let cart = JSON.parse(localStorage.getItem("cart")) || {
       apple: 1,
       cherry: 1,
-      pecan: 1,
+      pecan: 1
     };
 
-    function updateQuantity(pie, change) {
-      cart[pie] = Math.max(0, (cart[pie] || 0) + change);
-      localStorage.setItem('cart', JSON.stringify(cart));
-      renderCart();
-    }
+    function updateDOM() {
+      let grandTotal = 0;
+      for (let item in cart) {
+        const qty = cart[item];
+        const price = prices[item];
+        const lineTotal = qty * price;
 
-    function renderCart() {
-      let total = 0;
-      for (const pie in prices) {
-        const qty = cart[pie] || 0;
-        const lineTotal = qty * prices[pie];
-        total += lineTotal;
-        document.getElementById(`qty-${pie}`).textContent = qty;
-        document.getElementById(`line-total-${pie}`).textContent = `$${lineTotal.toFixed(2)}`;
+        document.getElementById(`qty-${item}`).textContent = qty;
+        document.getElementById(`total-${item}`).textContent = lineTotal.toFixed(2);
+        grandTotal += lineTotal;
       }
-      document.getElementById('cart-total').textContent = `Total: $${total.toFixed(2)}`;
+      document.getElementById("grand-total").textContent = grandTotal.toFixed(2);
+      localStorage.setItem("cart", JSON.stringify(cart));
     }
 
-    renderCart();
+    function updateQuantity(item, change) {
+      if (!(item in cart)) cart[item] = 0;
+      cart[item] += change;
+      if (cart[item] < 0) cart[item] = 0;
+      updateDOM();
+    }
+
+    // Initialize cart display
+    updateDOM();
   </script>
 </body>
 </html>
