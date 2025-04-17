@@ -87,18 +87,31 @@
   </div>
 
   <script>
-    // Load total from sessionStorage
+    // Load total from localStorage (cart data)
     const totalDisplay = document.getElementById('checkout-total');
-    const total = sessionStorage.getItem('cartTotal');
-    totalDisplay.textContent = total
-      ? `$${parseFloat(total).toFixed(2)}`
-      : '$0.00';
-
+    const cart = JSON.parse(localStorage.getItem('cart')) || {};
+    const totalCost = Object.keys(cart).reduce((total, pie) => {
+      const price = getPrice(pie); // Define getPrice function for the prices
+      return total + (cart[pie] * price);
+    }, 0);
+    
+    // Function to get price for each pie (example)
+    function getPrice(pie) {
+      const prices = {
+        apple: 10.99,
+        cherry: 12.99,
+        pecan: 14.99,
+      };
+      return prices[pie] || 0;
+    }
+  
+    totalDisplay.textContent = `$${totalCost.toFixed(2)}`;
+  
     // Handle form submission
     document.getElementById('checkout-form').addEventListener('submit', function (e) {
       e.preventDefault();
       alert('Your order has been placed!');
-      sessionStorage.clear();
+      localStorage.removeItem('cart');  // Clear the cart after order
       window.location.href = 'index.html';
     });
   </script>
