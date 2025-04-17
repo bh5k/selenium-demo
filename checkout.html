@@ -87,15 +87,15 @@
   </div>
 
   <script>
-    // Load total from session storage (if available)
+    // Load total from sessionStorage
     const totalDisplay = document.getElementById('checkout-total');
     const total = sessionStorage.getItem('cartTotal');
-    if (total) {
-      totalDisplay.textContent = `$${parseFloat(total).toFixed(2)}`;
-    }
+    totalDisplay.textContent = total
+      ? `$${parseFloat(total).toFixed(2)}`
+      : '$0.00';
 
     // Handle form submission
-    document.getElementById('checkout-form').addEventListener('submit', function(e) {
+    document.getElementById('checkout-form').addEventListener('submit', function (e) {
       e.preventDefault();
       alert('Your order has been placed!');
       sessionStorage.clear();
