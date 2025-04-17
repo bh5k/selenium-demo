@@ -4,124 +4,136 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Your Cart</title>
+  <link rel="stylesheet" href="styles.css" />
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f9f9f9;
-      margin: 0;
-      padding: 0;
-    }
-
-    header {
-      background-color: #d6336c;
-      color: white;
-      padding: 1rem;
-      text-align: center;
-    }
-
-    .container {
-      max-width: 900px;
+    .cart-container {
+      max-width: 800px;
       margin: 2rem auto;
-      background: white;
-      padding: 2rem;
-      border-radius: 12px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      padding: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      background: #fff;
     }
-
-    h1 {
-      margin-bottom: 1.5rem;
-      text-align: center;
-    }
-
     .cart-item {
       display: flex;
       align-items: center;
-      margin-bottom: 1.5rem;
+      justify-content: space-between;
       border-bottom: 1px solid #eee;
-      padding-bottom: 1.5rem;
+      padding: 1rem 0;
     }
-
     .cart-item img {
-      width: 100px;
-      height: 100px;
-      object-fit: cover;
+      width: 80px;
       border-radius: 10px;
       margin-right: 1rem;
     }
-
     .item-details {
       flex-grow: 1;
     }
-
     .item-name {
-      font-weight: bold;
       font-size: 1.2rem;
-      margin-bottom: 0.3rem;
+      font-weight: bold;
     }
-
-    .remove-button {
-      background-color: #dc3545;
-      color: white;
-      border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
-      cursor: pointer;
-      height: fit-content;
+    .quantity-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
-
-    .checkout-btn {
-      margin-top: 2rem;
-      display: block;
-      width: 100%;
-      background-color: #28a745;
-      color: white;
-      padding: 1rem;
-      border: none;
-      border-radius: 10px;
+    .quantity-controls button {
+      padding: 0.3rem 0.6rem;
       font-size: 1rem;
-      cursor: pointer;
     }
-
-    .checkout-btn:hover {
-      background-color: #218838;
+    .line-total {
+      font-weight: bold;
     }
-
+    .cart-total {
+      text-align: right;
+      margin-top: 1rem;
+      font-size: 1.3rem;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
-  <header>
+  <div class="cart-container">
     <h1>Your Cart</h1>
-  </header>
-
-  <div class="container">
-    <div class="cart-item">
-      <img src="https://i.imgur.com/9JtVIbi.png" alt="Apple Pie" />
+    
+    <div class="cart-item" data-id="apple">
+      <img src="https://i.imgur.com/9JtVIbi.png" alt="Apple Pie">
       <div class="item-details">
         <div class="item-name">Apple Pie</div>
-        <div>Sweet and tart with a flaky crust.</div>
+        <div>$12.00</div>
+        <div class="quantity-controls">
+          <button onclick="updateQuantity('apple', -1)">-</button>
+          <span id="qty-apple">1</span>
+          <button onclick="updateQuantity('apple', 1)">+</button>
+        </div>
       </div>
-      <button class="remove-button">Remove</button>
+      <div class="line-total" id="line-total-apple">$12.00</div>
     </div>
 
-    <div class="cart-item">
-      <img src="https://i.imgur.com/bviFU4U.png" alt="Cherry Pie" />
+    <div class="cart-item" data-id="cherry">
+      <img src="https://i.imgur.com/bviFU4U.png" alt="Cherry Pie">
       <div class="item-details">
         <div class="item-name">Cherry Pie</div>
-        <div>Juicy cherries in a golden pastry.</div>
+        <div>$14.00</div>
+        <div class="quantity-controls">
+          <button onclick="updateQuantity('cherry', -1)">-</button>
+          <span id="qty-cherry">1</span>
+          <button onclick="updateQuantity('cherry', 1)">+</button>
+        </div>
       </div>
-      <button class="remove-button">Remove</button>
+      <div class="line-total" id="line-total-cherry">$14.00</div>
     </div>
 
-    <div class="cart-item">
-      <img src="https://i.imgur.com/TCCj56K.png" alt="Pecan Pie" />
+    <div class="cart-item" data-id="pecan">
+      <img src="https://i.imgur.com/TCCj56K.png" alt="Pecan Pie">
       <div class="item-details">
         <div class="item-name">Pecan Pie</div>
-        <div>Rich, buttery, and nutty goodness.</div>
+        <div>$16.00</div>
+        <div class="quantity-controls">
+          <button onclick="updateQuantity('pecan', -1)">-</button>
+          <span id="qty-pecan">1</span>
+          <button onclick="updateQuantity('pecan', 1)">+</button>
+        </div>
       </div>
-      <button class="remove-button">Remove</button>
+      <div class="line-total" id="line-total-pecan">$16.00</div>
     </div>
 
-    <button class="checkout-btn" onclick="window.location.href='checkout.html'">Proceed to Checkout</button>
+    <div class="cart-total" id="cart-total">Total: $42.00</div>
   </div>
+
+  <script>
+    const prices = {
+      apple: 12,
+      cherry: 14,
+      pecan: 16,
+    };
+
+    let cart = JSON.parse(localStorage.getItem('cart')) || {
+      apple: 1,
+      cherry: 1,
+      pecan: 1,
+    };
+
+    function updateQuantity(pie, change) {
+      cart[pie] = Math.max(0, (cart[pie] || 0) + change);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      renderCart();
+    }
+
+    function renderCart() {
+      let total = 0;
+      for (const pie in prices) {
+        const qty = cart[pie] || 0;
+        const lineTotal = qty * prices[pie];
+        total += lineTotal;
+        document.getElementById(`qty-${pie}`).textContent = qty;
+        document.getElementById(`line-total-${pie}`).textContent = `$${lineTotal.toFixed(2)}`;
+      }
+      document.getElementById('cart-total').textContent = `Total: $${total.toFixed(2)}`;
+    }
+
+    renderCart();
+  </script>
 </body>
 </html>
