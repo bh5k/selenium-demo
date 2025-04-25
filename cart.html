@@ -1,167 +1,159 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Your Cart</title>
-  <link rel="stylesheet" href="styles.css" />
-  <style>
-    body {
-      font-family: sans-serif;
-      background-color: #f7f7f7;
-    }
-    .cart-container {
-      max-width: 800px;
-      margin: 2rem auto;
-      padding: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      background: #fff;
-    }
-    h1 {
-      text-align: center;
-      color: #333;
-      margin-bottom: 1.5rem;
-    }
-    .cart-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 1px solid #eee;
-      padding: 1rem 0;
-    }
-    .cart-item img {
-      width: 80px;
-      border-radius: 10px;
-      margin-right: 1rem;
-    }
-    .item-details {
-      flex-grow: 1;
-    }
-    .item-name {
-      font-size: 1.2rem;
-      font-weight: bold;
-    }
-    .quantity-controls {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      margin-top: 0.5rem;
-    }
-    .quantity-controls button {
-      padding: 0.3rem 0.6rem;
-      font-size: 1rem;
-    }
-    .line-total {
-      font-weight: bold;
-    }
-    .cart-total {
-      text-align: right;
-      margin-top: 1rem;
-      font-size: 1.3rem;
-      font-weight: bold;
-    }
-    .checkout-button {
-      display: block;
-      margin: 2rem auto 0;
-      padding: 0.75rem 2rem;
-      background-color: #28a745;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 1.1rem;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-    .checkout-button:hover {
-      background-color: #218838;
-    }
-  </style>
-</head>
-<body>
-  <div class="cart-container">
-    <h1>Your Cart</h1>
-    
-    <div class="cart-item" data-id="apple">
-      <img src="https://i.imgur.com/9JtVIbi.png" alt="Apple Pie">
-      <div class="item-details">
-        <div class="item-name">Apple Pie</div>
-        <div>$12.00</div>
-        <div class="quantity-controls">
-          <button onclick="updateQuantity('apple', -1)">-</button>
-          <span id="qty-apple">1</span>
-          <button onclick="updateQuantity('apple', 1)">+</button>
-        </div>
-      </div>
-      <div class="line-total" id="line-total-apple">$12.00</div>
-    </div>
+  <meta charset="UTF-8">
+  <title>Bethany's Pie Shop</title>
+  <link href="./css/main.css" rel="stylesheet">
 
-    <div class="cart-item" data-id="cherry">
-      <img src="https://i.imgur.com/bviFU4U.png" alt="Cherry Pie">
-      <div class="item-details">
-        <div class="item-name">Cherry Pie</div>
-        <div>$14.00</div>
-        <div class="quantity-controls">
-          <button onclick="updateQuantity('cherry', -1)">-</button>
-          <span id="qty-cherry">1</span>
-          <button onclick="updateQuantity('cherry', 1)">+</button>
-        </div>
-      </div>
-      <div class="line-total" id="line-total-cherry">$14.00</div>
-    </div>
+  <script type="text/javascript">
+    window.onload = () => {
+      let submit_button = document.querySelector('#submit')
+      submit_button.addEventListener('click', (event) => {
+        event.preventDefault()
 
-    <div class="cart-item" data-id="pecan">
-      <img src="https://i.imgur.com/TCCj56K.png" alt="Pecan Pie">
-      <div class="item-details">
-        <div class="item-name">Pecan Pie</div>
-        <div>$16.00</div>
-        <div class="quantity-controls">
-          <button onclick="updateQuantity('pecan', -1)">-</button>
-          <span id="qty-pecan">1</span>
-          <button onclick="updateQuantity('pecan', 1)">+</button>
-        </div>
-      </div>
-      <div class="line-total" id="line-total-pecan">$16.00</div>
-    </div>
-
-    <div class="cart-total" id="cart-total">Total: $42.00</div>
-
-    <button class="checkout-button" onclick="window.location.href='checkout.html'">Proceed to Checkout</button>
-
-  </div>
-
-  <script>
-    const prices = {
-      apple: 12,
-      cherry: 14,
-      pecan: 16,
-    };
-
-    let cart = JSON.parse(localStorage.getItem('cart')) || {
-      apple: 1,
-      cherry: 1,
-      pecan: 1,
-    };
-
-    function updateQuantity(pie, change) {
-      cart[pie] = Math.max(0, (cart[pie] || 0) + change);
-      localStorage.setItem('cart', JSON.stringify(cart));
-      renderCart();
+        // redirect to shipping.html when the checkout button is pressed to simulate a checkout flow
+        window.open('./shipping.html','_self')
+      }, false)
     }
-
-    function renderCart() {
-      let total = 0;
-      for (const pie in prices) {
-        const qty = cart[pie] || 0;
-        const lineTotal = qty * prices[pie];
-        total += lineTotal;
-        document.getElementById(`qty-${pie}`).textContent = qty;
-        document.getElementById(`line-total-${pie}`).textContent = `$${lineTotal.toFixed(2)}`;
-      }
-      document.getElementById('cart-total').textContent = `Total: $${total.toFixed(2)}`;
-    }
-
-    renderCart();
   </script>
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="site-header-wrapper">
+      <h1><a href="index.html"><img src="./img/logo.png" alt="Bethany's Pie Shop Logo" /></a></h1>
+      <nav>
+        <ul>
+          <li><a class="shop-dropdown" href="#">Shop <span>&#8964;</span></a>
+            <ul id="hover-menu">
+              <li><a href="#">Seasonal Pies</a></li>
+              <li><a href="#">Fruit Pies</a></li>
+              <li><a href="shop.html">Cheesecakes</a></li>
+              <li><a href="#">All Pies</a></li>
+            </ul>
+          </li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="#">Register</a></li>
+        </ul>
+      </nav>
+      <div class="header-icons">
+        <ul>
+          <li><a href=""><img src="./img/search-icon.png" alt="search icon" /></a></li>
+          <li><a href=""><img src="./img/profile-icon.png" alt="profile icon" /></a></li>
+          <li><a href="cart.html"><img src="./img/cart-icon.png" alt="shopping cart icon" /></a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+  <section class="main-content">
+    <h2>Shopping Cart<hr /></h2>
+    <div class="cart-wrapper">
+      <div class="cart-items-wrapper">
+        <div class="cart-item">
+          <div class="cart-item-image-wrapper">
+            <img src="./img/pie-1.png" alt="image of Classic Apple Pie" />
+          </div>
+          <div class="cart-item-details-wrapper">
+            <p class="cart-item-number">ITEM # 00000001</p>
+            <p class="cart-item-name">Classic Apple Pie</p>
+            <p class="cart-item-description">Our famous homemade apple pie</p>
+            <div class="quantity-selector-wrapper">
+              <div class="quantity-selector">
+                <button>-</button>
+                <span>1</span>
+                <button>+</button>
+              </div>
+              <a href="#">Delete</a>
+            </div>
+          </div>
+          <div class="cart-item-price-wrapper">
+            <p class="cart-item-price">$12.95</p>
+          </div>
+        </div>
+        <div class="cart-item">
+          <div class="cart-item-image-wrapper">
+            <img src="./img/pie-3.png" alt="image of Chocolate Pecan Pie" />
+          </div>
+          <div class="cart-item-details-wrapper">
+            <p class="cart-item-number">ITEM # 00000002</p>
+            <p class="cart-item-name">Chocolate Pecan Pie</p>
+            <p class="cart-item-description">Our famous homemade chocolate pecan pie</p>
+            <div class="quantity-selector-wrapper">
+              <div class="quantity-selector">
+                <button>-</button>
+                <span>1</span>
+                <button>+</button>
+              </div>
+              <a href="#">Delete</a>
+            </div>
+          </div>
+          <div class="cart-item-price-wrapper">
+            <p class="cart-item-price">$12.95</p>
+          </div>
+        </div>
+        <div class="cart-item">
+          <div class="cart-item-image-wrapper">
+            <img src="./img/cheesecake-1.png" alt="image of Original Cheesecake" />
+          </div>
+          <div class="cart-item-details-wrapper">
+            <p class="cart-item-number">ITEM # 00000003</p>
+            <p class="cart-item-name">Original Cheesecake</p>
+            <p class="cart-item-description">Our famous homemade cheesecake</p>
+            <div class="quantity-selector-wrapper">
+              <div class="quantity-selector">
+                <button>-</button>
+                <span>1</span>
+                <button>+</button>
+              </div>
+              <a href="#">Delete</a>
+            </div>
+          </div>
+          <div class="cart-item-price-wrapper">
+            <p class="cart-item-price">$18.95</p>
+          </div>
+        </div>
+
+      </div>
+      <div class="subtotal-wrapper">
+        <form>
+          <div class="row">
+            <p>Subtotal</p>
+            <p>$44.85</p>
+          </div>
+          <div class="row">
+            <p>Shipping</p>
+            <p>$15.00</p>
+          </div>
+          <div class="row">
+            <p>Sales Tax</p>
+            <p>--</p>
+          </div>
+          <div class="row">
+            <hr />
+          </div>
+          <div class="row">
+            <p>Estimated Total</p>
+            <p>$59.85</p>
+          </div>
+          <div class="row">
+            <hr>
+          </div>
+          <div class="row">
+            <input type="text" name="discount-code" id="discount-code" placeholder="Discount code or gift card" />
+            <button>Apply</button>
+          </div>
+          <div class="row">
+            <hr>
+          </div>
+          <div class="row">
+              <input type="submit" name="submit" id="submit" value="Checkout" />
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+  <script src="./js/dropdown.js"></script>
 </body>
+
 </html>
