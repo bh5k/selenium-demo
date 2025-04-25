@@ -86,8 +86,12 @@
 
       if (username === "jack" && password === "test1234") {
         localStorage.setItem("loggedInUser", username);
-        messageDiv.textContent = "Login successful!";
-        messageDiv.className = "login-message success";
+        message.textContent = "Login successful! Redirecting...";
+        message.style.color = "green";
+
+        setTimeout(() => {
+            window.location.href = "index.html";
+        }, 2000); // 1 second delay for the message to show
       } else {
         messageDiv.textContent = "Invalid username or password.";
         messageDiv.className = "login-message error";
