@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Bethany's Pie Shop - Login</title>
+  <link href="./css/main.css" rel="stylesheet">
+  <style>
+    .login-message {
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    .success {
+      color: green;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="site-header-wrapper">
+      <h1><a href="index.html"><img src="./img/logo.png" alt="Bethany's Pie Shop Logo" /></a></h1>
+      <nav>
+        <ul>
+          <li><a class="shop-dropdown" href="#">Shop <span>&#8964;</span></a>
+            <ul id="hover-menu">
+              <li><a href="#">Seasonal Pies</a></li>
+              <li><a href="#">Fruit Pies</a></li>
+              <li><a href="shop.html">Cheesecakes</a></li>
+              <li><a href="#">All Pies</a></li>
+            </ul>
+          </li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="#">Register</a></li>
+        </ul>
+      </nav>
+      <div class="header-icons">
+        <ul>
+          <li><a href=""><img src="./img/search-icon.png" alt="search icon" /></a></li>
+          <li><a href=""><img src="./img/profile-icon.png" alt="profile icon" /></a></li>
+          <li><a href="cart.html"><img src="./img/cart-icon.png" alt="shopping cart icon" /></a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+  <section class="main-content">
+    <h2>Login<hr /></h2>
+    <div class="contact-wrapper">
+      <div class="image-wrapper">
+        <img src="./img/contact.png" alt="image of person sticking a fork in a piece of pie" />
+      </div>
+      <div class="form-wrapper">
+        <h3>Welcome Back!</h3>
+        <p>Please enter your login details below.</p>
+        <fieldset>
+          <form id="loginForm">
+            <label for="username">Username or Email</label>
+            <input type="text" id="username" name="username" value="" required />
+
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" value="" required />
+
+            <input type="submit" value="Login" />
+          </form>
+        </fieldset>
+
+        <div id="loginMessage" class="login-message"></div>
+
+        <p><a href="#">Forgot your password?</a></p>
+        <p>Don’t have an account? <a href="#">Register here</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <script src="./js/dropdown.js"></script>
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+      const messageDiv = document.getElementById("loginMessage");
+
+      if (username === "jack" && password === "test1234") {
+        messageDiv.textContent = "Login successful!";
+        messageDiv.className = "login-message success";
+      } else {
+        messageDiv.textContent = "Invalid username or password.";
+        messageDiv.className = "login-message error";
+      }
+    });
+  </script>
+</body>
+
+</html>
