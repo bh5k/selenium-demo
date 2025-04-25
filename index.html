@@ -28,7 +28,7 @@
       <div class="header-icons">
         <ul>
           <li><a href=""><img src="./img/search-icon.png" alt="search icon" /></a></li>
-          <li><a href=""><img src="./img/profile-icon.png" alt="profile icon" /></a></li>
+          <li><a href="login.html"><img src="./img/profile-icon.png" alt="profile icon" /></a></li>
           <li><a href="cart.html"><img src="./img/cart-icon.png" alt="shopping cart icon" /></a></li>
         </ul>
       </div>
@@ -49,6 +49,9 @@
       </div>
       <h2>Pies of the Week</h2>
       <p>Enjoy a weekly selection of our favorite pies</p>
+      <div class="welcome-message">
+        <p id="welcomeMessage"></p>
+      </div>  
     </div>
   </section>
   <section>
@@ -88,6 +91,17 @@
   </div>
   <script src="./js/dropdown.js"></script>
   <script src="./js/carousel.js"></script>
+  <script>
+    const loggedInUser = localStorage.getItem("loggedInUser");
+    const welcomeElem = document.getElementById("welcomeMessage");
+  
+    if (loggedInUser) {
+      welcomeElem.textContent = `Welcome back, ${loggedInUser}!`;
+    } else {
+      welcomeElem.textContent = "Welcome to Bethany's Pie Shop!";
+    }
+  </script>
+  
 </body>
 
 </html>
