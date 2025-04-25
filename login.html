@@ -85,6 +85,7 @@
       const messageDiv = document.getElementById("loginMessage");
 
       if (username === "jack" && password === "test1234") {
+        localStorage.setItem("loggedInUser", username);
         messageDiv.textContent = "Login successful!";
         messageDiv.className = "login-message success";
       } else {
