@@ -375,6 +375,15 @@ a.shop-dropdown span {
     font-weight: 500;
 }
 
+.pie-size {
+    margin: 5px 0;
+}
+
+.pie-size label {
+    font-size: 0.9em;
+    margin-right: 5px;
+}
+
 /* *************** .contact-wrapper and .form-wrapper styles */
 
 .contact-wrapper {
