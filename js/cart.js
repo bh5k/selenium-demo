@@ -1,78 +1,83 @@
 // Add to cart function
 function addToCart(pie) {
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
-    
-    const existing = cart.find(item => item.id === pie.id);
-    if (existing) {
-      existing.quantity += 1;
-    } else {
-      cart.push({...pie, quantity: 1});
-    }
-  
-    localStorage.setItem("cart", JSON.stringify(cart));
-    alert(`${pie.name} added to cart!`);
+  // Get the selected size from the dropdown
+  const sizeSelect = document.getElementById(`size-${pie.id}`);
+  const selectedSize = sizeSelect ? sizeSelect.value : "Medium"; // default if no dropdown found
+
+  // Retrieve existing cart or create a new array
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  // Add size info to the pie object
+  const pieWithSize = { ...pie, size: selectedSize, quantity: 1 };
+
+  // Check if this pie (with same size) already exists in cart
+  const existingItemIndex = cart.findIndex(
+    (item) => item.id === pie.id && item.size === selectedSize
+  );
+
+  if (existingItemIndex > -1) {
+    cart[existingItemIndex].quantity += 1;
+  } else {
+    cart.push(pieWithSize);
+  }
+
+  // Save updated cart to localStorage
+  localStorage.setItem("cart", JSON.stringify(cart));
+
+  console.log(`Added to cart: ${pie.name}, Size: ${selectedSize}`);
 }
   
-  // Render cart contents
-  function renderCart() {
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
-    const cartItemsContainer = document.getElementById("cartItems");
-    const cartTotalContainer = document.getElementById("cartTotal");
-  
-    cartItemsContainer.innerHTML = "";
-  
-    if (cart.length === 0) {
-      cartItemsContainer.innerHTML = "<p>Your cart is empty.</p>";
-      cartTotalContainer.innerHTML = "";
-      return;
-    }
-  
-    let total = 0;
-  
-    cart.forEach(item => {
-      const itemDiv = document.createElement("div");
-      itemDiv.className = "cart-item";
-  
-      const subtotal = (item.price * item.quantity);
-      total += subtotal;
-  
-      itemDiv.innerHTML = `
-        <img src="${item.image}" alt="${item.name}" width="100">
-        <h4>${item.name}</h4>
-        <p>Price: $${item.price.toFixed(2)}</p>
-        <p>Quantity: ${item.quantity}</p>
-        <p>Subtotal: $${subtotal.toFixed(2)}</p>
-      `;
-  
-      cartItemsContainer.appendChild(itemDiv);
-    });
-  
-    document.getElementById("cartTotal").textContent = total.toFixed(2);
+function renderCart() {
+  const cartItemsContainer = document.getElementById("cartItems");
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-  }
-  
-  document.addEventListener("DOMContentLoaded", () => {
-    renderCart();
+  cartItemsContainer.innerHTML = "";
+  let total = 0;
+
+  cart.forEach(item => {
+    const itemTotal = item.price * item.quantity;
+    total += itemTotal;
+
+    const itemElem = document.createElement("div");
+    itemElem.className = "cart-item";
+    itemElem.innerHTML = `
+      <div style="flex: 1;">
+        <strong>${item.name}</strong> (${item.size})
+      </div>
+      <div style="flex: 1;">$${item.price.toFixed(2)}</div>
+      <div style="flex: 1;">
+        <input type="number" value="${item.quantity}" min="1" 
+          onchange="updateQuantity(${item.id}, this.value, '${item.size}')"
+          style="width: 50px;" />
+      </div>
+      <div style="flex: 1;">$${itemTotal.toFixed(2)}</div>
+    `;
+    cartItemsContainer.appendChild(itemElem);
   });
-  
-  
-  // Update item quantity
-  function updateQuantity(index, change) {
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
-    cart[index].quantity += change;
-  
-    if (cart[index].quantity <= 0) {
-      cart.splice(index, 1);
-    }
-  
-    localStorage.setItem("cart", JSON.stringify(cart));
-    renderCart();
-  }
 
-  function clearCart() {
-    localStorage.removeItem("cart");
-    renderCart();
-  }
-  
+  document.getElementById("cartTotal").textContent = total.toFixed(2);
+}
+
+function clearCart() {
+  localStorage.removeItem("cart");
   renderCart();
+}
+
+function updateQuantity(id, newQuantity, size) {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  cart = cart.map(item => {
+    if (item.id === id && item.size === size) {
+      item.quantity = parseInt(newQuantity, 10);
+    }
+    return item;
+  });
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+  renderCart();
+}
+
+document.addEventListener("DOMContentLoaded", renderCart);
+  
+renderCart();
   
