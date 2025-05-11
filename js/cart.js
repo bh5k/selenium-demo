@@ -1,3 +1,5 @@
+import { pies } from './pie-options.js';
+
 // Add to cart function
 function addToCart(pie) {
   // Get the selected size from the dropdown
@@ -76,6 +78,23 @@ function updateQuantity(id, newQuantity, size) {
   localStorage.setItem("cart", JSON.stringify(cart));
   renderCart();
 }
+
+// Attach event listeners to Add to Cart links
+document.querySelectorAll(".add-to-cart").forEach(function(link) {
+  link.addEventListener("click", function(event) {
+    event.preventDefault();
+    const id = parseInt(this.getAttribute("data-id"));
+    
+    // Find the pie by ID
+    const pie = pies.find(p => p.id === id);
+    
+    if (pie) {
+      addToCart(pie);
+    } else {
+      console.error("Pie not found with ID: " + id);
+    }
+  });
+});
 
 document.addEventListener("DOMContentLoaded", renderCart);
   

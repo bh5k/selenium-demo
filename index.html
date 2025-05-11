@@ -61,9 +61,7 @@
         <img src="./img/pie-1.png" alt="image of Classic Apple Pie" />
         <div class="add-to-cart">
             <p>
-                <a href="#" onclick='addToCart({id: 1, name: "Classic Apple Pie", price: 12.95, image: "./img/pie-1.png"})'>
-                    + Add to cart
-                </a>
+              <a href="#" class="add-to-cart" data-id="1">+ Add to cart</a>
             </p>
         </div>
         <div class="add-to-favorite">
@@ -88,9 +86,7 @@
         <img src="./img/pie-2.png" alt="image of Pumpkin Pie" />
         <div class="add-to-cart">
             <p>
-                <a href="#" onclick='addToCart({id: 2, name: "Pumpkin Pie", price: 12.95, image: "./img/pie-2.png"})'>
-                    + Add to cart
-                </a>
+              <a href="#" class="add-to-cart" data-id="2">+ Add to cart</a>
             </p>
         </div>
         <div class="add-to-favorite">
@@ -115,9 +111,7 @@
         <img src="./img/pie-3.png" alt="image of Pecan Pie" />
         <div class="add-to-cart">
             <p>
-                <a href="#" onclick='addToCart({id: 3, name: "Pecan Pie", price: 12.95, image: "./img/pie-3.png"})'>
-                    + Add to cart
-                </a>
+              <a href="#" class="add-to-cart" data-id="3">+ Add to cart</a>
             </p>
         </div>
         <div class="add-to-favorite">
@@ -143,9 +137,10 @@
   </div>
   <script src="./js/dropdown.js"></script>
   <script src="./js/carousel.js"></script>
-  <script src="./js/cart.js"></script>
   <script src="./js/favorite.js"></script>
-  <script src="./js/pie-options.js"></script>
+  <script type="module" src="./js/cart.js"></script>
+  <script type="module" src="./js/pie-options.js"></script>
+  
   <script>
     const loggedInUser = localStorage.getItem("loggedInUser");
     const welcomeElem = document.getElementById("welcomeMessage");
