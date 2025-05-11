@@ -31,6 +31,8 @@ function addToCart(pie) {
   
 function renderCart() {
   const cartItemsContainer = document.getElementById("cartItems");
+  if (!cartItemsContainer) return;  // Bail if not on cart page
+
   const cart = JSON.parse(localStorage.getItem("cart")) || [];
 
   cartItemsContainer.innerHTML = "";
@@ -105,7 +107,12 @@ document.querySelectorAll(".mark-favorite").forEach(button => {
 });
 
 
-document.addEventListener("DOMContentLoaded", renderCart);
-  
-renderCart();
+document.addEventListener("DOMContentLoaded", () => {
+  const cartItemsContainer = document.getElementById("cartItems");
+  if (cartItemsContainer) {
+    renderCart();
+  }
+});
+
+
   
