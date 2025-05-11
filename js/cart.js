@@ -50,13 +50,19 @@ function renderCart() {
       </div>
       <div style="flex: 1;">$${item.price.toFixed(2)}</div>
       <div style="flex: 1;">
-        <input type="number" value="${item.quantity}" min="1" 
-          onchange="updateQuantity(${item.id}, this.value, '${item.size}')"
+        <input type="number" value="${item.quantity}" min="1"
+          data-id="${item.id}" data-size="${item.size}" 
           style="width: 50px;" />
       </div>
       <div style="flex: 1;">$${itemTotal.toFixed(2)}</div>
     `;
     cartItemsContainer.appendChild(itemElem);
+
+    // Attach event listener for quantity change
+    const inputElem = itemElem.querySelector("input[type='number']");
+    inputElem.addEventListener("change", (e) => {
+      updateQuantity(item.id, e.target.value, item.size);
+    });
   });
 
   document.getElementById("cartTotal").textContent = total.toFixed(2);
