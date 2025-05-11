@@ -96,6 +96,15 @@ document.querySelectorAll(".add-to-cart").forEach(function(link) {
   });
 });
 
+// Attach event listeners to favorite buttons
+document.querySelectorAll(".mark-favorite").forEach(button => {
+  button.addEventListener("click", () => {
+    const name = button.getAttribute("data-name");
+    alert(`${name} has been added to your favorites!`);
+  });
+});
+
+
 document.addEventListener("DOMContentLoaded", renderCart);
   
 renderCart();
