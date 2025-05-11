@@ -80,7 +80,7 @@ function updateQuantity(id, newQuantity, size) {
 }
 
 // Attach event listeners to Add to Cart links
-document.querySelectorAll(".add-to-cart").forEach(function(link) {
+document.querySelectorAll(".add-to-cart-link").forEach(function(link) {
   link.addEventListener("click", function(event) {
     event.preventDefault();
     const id = parseInt(this.getAttribute("data-id"));
